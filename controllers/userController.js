@@ -31,7 +31,7 @@ module.exports = {
         .then((user)=>
         !user
         ?res.status(404).json({message: 'user not found'})
-        :res.json(user)
+        :res.json({message: 'user deleted!'})
         )
         .catch((err)=>res.status(500).json(err));
     },
@@ -46,5 +46,31 @@ module.exports = {
         :res.json(user)
         )
         .catch((err)=>res.status(500).json(err));
+    },
+    addFriend(req, res) {
+        User.findOneAndUpdate(
+            {_id:req.params.userId},
+            {$addToSet:{friends:req.params.friendId}},
+            {new: true}
+        )
+        .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No User with this id!' })
+          : res.json('We are friends now!')
+      )
+      .catch((err) => res.status(500).json(err));
+    },
+    removeFriend(req, res){
+        User.findOneAndUpdate(
+            {_id:req.params.userId},
+            {$pull:{friends:req.params.friendId}},
+            { new: true }
+        )
+        .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No User with this id!' })
+          : res.json('not friend any more')
+      )
+      .catch((err) => res.status(500).json(err));
     }
 }
