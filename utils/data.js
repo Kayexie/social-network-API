@@ -4,24 +4,17 @@ const usernames = [
     "Muscleman",
     "Ruggedman",
     "LoneWolf",
-    "Mindbender",
-    "Powerpixel",
-    "Mysticlover",
-    "Outlawking",
-    "Princecharming",
-    "Daredevil",
-    "Dragonlord",
-    "CutiePatootie",
-    "Dollface",
-    "SugarLips",
-    "SugarAndSpice",
-    "SweetiePie",
-    "CupcakeCutie",
-    "GirlNextDoor",
-    "BubblyBlonde",
   ];
 
-const thoughts = [
+  const emails = [
+    "Topslugger@gmail.com",
+    "Thrillseeker@123.com",
+    "Muscleman@bbc.com",
+    "Ruggedman@111.com",
+    "LoneWolf@yyy.com",
+  ]
+
+const thoughtsText = [
     "You can regret a lot of things but you'll never regret being kind.",
     "Do whatever makes you happiest.",
     "Having the dream is easy, making it come true is hard.",
@@ -55,8 +48,33 @@ const possibleReactions = [
 
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const getRandomUsernames = () =>
-`${getRandomArrItem(usernames)}`
+const getUsers = () => {
+    const users=[];
+    for (let i = 0; i < usernames.length; i++) {
+    const name = usernames[i];
+    const email = emails[i];
+    const user = {username: name, email: email};
+    users.push(user);
+}
+return users;
+}
+
+const getThoughts = () =>{
+    const thoughts =[];
+
+    for (let i=0; i < usernames.length; i++) {
+    const username = usernames[i];
+    let thought1 = thoughtsText[i];
+    let thought2 = thoughtsText[i + 1];
+    let thought3 = thoughtsText[i + 2];
+
+        thoughts.push({thoughtText: thought1, username: username})
+        thoughts.push({thoughtText: thought2, username: username})
+        thoughts.push({thoughtText: thought3, username: username})
+    
+    }
+    return thoughts;
+}
 
 const getRandomThoughts = (int) => {
     const results = [];
@@ -84,4 +102,4 @@ const getThoughtReactions = (int) => {
     return results;
 }
 
-module.exports = { getRandomUsernames, getRandomThoughts, getThoughtReactions};
+module.exports = { getUsers, getRandomThoughts, getThoughtReactions};
