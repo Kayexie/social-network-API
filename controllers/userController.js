@@ -8,7 +8,7 @@ module.exports = {
         .catch((err)=>res.status(500).json(err));
     },
     //get a single user
-    getUsers(req, res){
+    getSingleUser(req, res){
       User.findOne({ _id: req.params.userId})
         .select('-__v')
         .then((user)=>
@@ -18,9 +18,32 @@ module.exports = {
         )
         .catch((err)=>res.status(500).json(err));
     },
+    //create a single user
     createUser(req, res) {
         User.create(req.body)
         .then((dbUserData)=>res.json(dbUserData))
         .catch((err)=>res.status(500).json(err))
+    },
+    //delete a single user by id
+    deleteUser(req, res) {
+        User.findOneAndRemove({_id: req.params.userId})
+        .then((user)=>
+        !user
+        ?res.status(404).json({message: 'user not found'})
+        :res.json(user)
+        )
+        .catch((err)=>res.status(500).json(err));
+    },
+    updateUser(req, res) {
+        User.findOneAndUpdate(
+        {_id: req.params.userId},
+        {$set: req.body},
+        {new: true})
+        .then((user)=>
+        !user
+        ?res.status(404).json({message: 'user not found'})
+        :res.json(user)
+        )
+        .catch((err)=>res.status(500).json(err));
     }
 }
