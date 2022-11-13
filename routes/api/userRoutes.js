@@ -15,4 +15,7 @@ router.route('/').get(getUsers).post(createUser);
 // to get & put & delete a single user: /api/users/:userId
 router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 
+//to add & remove a friend to user's friend list
+router.route('/:userId/friends/:friendId').post().delete()
+
 module.exports = router;
